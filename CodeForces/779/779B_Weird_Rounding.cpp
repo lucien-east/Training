@@ -1,29 +1,42 @@
 #include <iostream>
 #include <string>
+#include <cstdlib>
 
-int num_of_digit_to_erase(const std::string &num, const int target_k)
+unsigned int num_of_digit_to_erase(const std::string &num, const unsigned int target_k)
 {
-	int ans = 0;
-	int len = num.length();
+	unsigned int ans = 0;
+	unsigned int num_zero = 0;
+	const size_t len = num.length();
+	char digit;
 	
-	std::cout << "len=" << len << ", " << num.at(0) << std::endl;
-	std::cout << "---" << *(num.rbegin()) << "---";
+	if(len <= target_k) {
+		// It is guaranteed that answer exists
+		return (len-1);
+	}
 
-	for(auto rit=num.rbegin(); rit!=num.rend(); ++rit)
-	{
-		// TODO: greedy	
+	for(std::string::const_reverse_iterator rit=num.rbegin(); rit!=num.rend(); ++rit) {
+		digit = *rit;
+		if (0 == atoi(&digit)) {
+			++num_zero;
+			continue;
+		}
+
+		if (num_zero == target_k) {
+			break;
+		}
+
+		++ans;
 	}	
 
-	std::cout << std::endl;
-
-	return ans;
+	// It is guaranteed that answer exits
+	return (num_zero==target_k) ? ans : (len-1);
 }
 
 int main()
 {
 	std::string input_num;
-	int target_k;
-	int ans;
+	unsigned int target_k;
+	unsigned int ans;
 
 	std::cin >> input_num >> target_k;
 
