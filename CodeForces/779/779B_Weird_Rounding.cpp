@@ -15,14 +15,14 @@ unsigned int num_of_digit_to_erase(const std::string &num, const unsigned int ta
 	}
 
 	for(std::string::const_reverse_iterator rit=num.rbegin(); rit!=num.rend(); ++rit) {
+		if (num_zero == target_k) {
+			break;
+		}
+
 		digit = *rit;
 		if (0 == atoi(&digit)) {
 			++num_zero;
 			continue;
-		}
-
-		if (num_zero == target_k) {
-			break;
 		}
 
 		++ans;
