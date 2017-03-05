@@ -7,7 +7,6 @@ unsigned int num_of_digit_to_erase(const std::string &num, const unsigned int ta
 	unsigned int ans = 0;
 	unsigned int num_zero = 0;
 	const size_t len = num.length();
-	char digit;
 	
 	if(len <= target_k) {
 		// It is guaranteed that answer exists
@@ -19,8 +18,7 @@ unsigned int num_of_digit_to_erase(const std::string &num, const unsigned int ta
 			break;
 		}
 
-		digit = *rit;
-		if (0 == atoi(&digit)) {
+		if ('0' == *rit) {
 			++num_zero;
 			continue;
 		}
