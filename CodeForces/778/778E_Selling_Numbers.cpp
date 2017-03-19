@@ -20,12 +20,47 @@ long long price()
 	return sum;
 }
 
+unsigned int max_strlen(const unsigned int &n)
+{
+	unsigned int max_len = 0;
+	for(int i=0; i<n; ++i) {
+		if(max_len < B[i].size())
+			max_len = B[i].size();
+	}
+
+	return max_len;
+}
+
+void update_digit_cnt()
+{
+
+}
+
 long long max_cost(const string &A, const unsigned int &n)
 {
 	long long tmp_cost;
 	long long max = 0;
 	long long current_price[10];
-	
+	unsigned int max_len;
+	string ans_A = A;
+
+	max_len = max_strlen(n);
+	for(int pos_B=0, pos_A=A.size()-1; pos_B<max_len; ++pos_B, --pos_A) {
+		for(int i=0; i<n; ++i) {
+			/* Begin from the least significant digit */
+			if( (int) B[i].size()-pos_B-1 < 0)
+				continue;
+
+			const char *tmp_B = B[i].c_str();
+
+			if(pos_A<0) {
+
+			}
+			else {
+
+			}
+		}
+	}
 
 	return max;
 }
@@ -45,7 +80,7 @@ int main()
 	for(int i=0; i<10; ++i)
 		cin >> cost[i];
 
-	cout << max_cost(A, n) << '\n';
+	cout << "MAX = " << max_cost(A, n) << '\n';
 
 	return 0;
 }
