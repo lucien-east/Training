@@ -45,20 +45,30 @@ long long max_cost(const string &A, const unsigned int &n)
 	string ans_A = A;
 
 	max_len = max_strlen(n);
-	for(int pos_B=0, pos_A=A.size()-1; pos_B<max_len; ++pos_B, --pos_A) {
+	for(int pos_B=0, pos_A=A.size()-1;
+		pos_B<max_len || pos_A>=0;
+		++pos_B, --pos_A)
+	{
+		/* pos_A: the least significant digit
+		 * pos_B: the most significant digit */
 		for(int i=0; i<n; ++i) {
-			/* Begin from the least significant digit */
-			if( (int) B[i].size()-pos_B-1 < 0)
-				continue;
-
+			/* rev_pos_B: Begin from the least significant digit of B[i] */
+			int rev_pos_B = (int) B[i].size() - pos_B - 1;
 			const char *tmp_B = B[i].c_str();
 
-			if(pos_A<0) {
+			if(rev_pos_B>=0 && pos_A >=0) {
+				/* A[pos_A] + B[i][rev_pos_B] + carry */
 
 			}
-			else {
+			else if(rev_pos_B<0 && pos_A>=0) {
+				/* A is longer than B[i]: A[pos_A] + carry */
 
 			}
+			else if(rev_pos_B>=0 && pos_A <0) {
+				/* B[i] is longer than A: B[i][rev_pos_B] + carry */
+
+			}
+
 		}
 	}
 
