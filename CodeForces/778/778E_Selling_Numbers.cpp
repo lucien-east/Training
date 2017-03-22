@@ -37,6 +37,20 @@ void update_digit_cnt()
 
 }
 
+void print_digit_cnt(const unsigned int *digit_cnt_table)
+{
+	// Debug use
+	cout << "The digit count table:-----\n";
+	for(int i=0; i<10; ++i)
+		cout << "[" << i << "]:" << digit_cnt_table[i] << '\n';
+}
+
+void init_table(int *table, const int &size)
+{
+	for(int i=0; i<size; ++i)
+		table[i] = 0;
+}
+
 long long max_cost(const string &A, const unsigned int &n)
 {
 	long long tmp_cost;
@@ -44,6 +58,7 @@ long long max_cost(const string &A, const unsigned int &n)
 	long long current_price[10];
 	long long previous_price[10];
 	unsigned int max_len;
+	int a;
 	string ans_A = A;
 
 	max_len = max_strlen(n);
@@ -62,7 +77,7 @@ long long max_cost(const string &A, const unsigned int &n)
 				 ***/
 				int rev_B = (int) B[i].size() - pos_B - 1;
 				const char *tmp_B = B[i].c_str();
-				int a, val;
+				int val = -1;
 
 				if(rev_B>=0 && pos_A >=0) {
 					/* A[pos_A] + B[i][rev_B] + carry */
@@ -82,11 +97,26 @@ long long max_cost(const string &A, const unsigned int &n)
 				carry[d][i] = (val > 9) ? true : false;
 
 				// TODO: update digit count
+				// (1) how to judge leading zero?
+				// (2) how to judge the most significant carry, e.g. 958+42 = "1"000
+				if(val != -1)
+					current_digit_cnt[(val%10)]++;
+				else
+					continue;
+
+				cout << "\nval = " << val << '\n';
+				cout << "current_digit_cnt[" << (val%10) << "] = " << current_digit_cnt[(val%10)] << '\n';
 
 			} /* B[0] to B[n] */
 
 
 			// TODO: Calculate the price
+			current_price[a] = price(current_digit_cnt);
+
+			cout << "\npos_A = " << pos_A << '\n';
+			cout << "***a = " << a << ", current_price = " << current_price[a] << '\n';
+			
+			// TODO: How to initialize the table?
 
 			if(A[pos_A] != '?')	break;
 
@@ -94,6 +124,15 @@ long long max_cost(const string &A, const unsigned int &n)
 
 
 	} /* the least to most significant digit */
+
+
+	/* Check for the last carry, e.g. 958+42 = "1"000 */
+	for(int d=0; d<=9; ++d)
+		for(int i=0; i<n; ++i)
+			if(carry[d][i])
+				current_digit_cnt[1]++;
+
+	print_digit_cnt(current_digit_cnt);
 
 	return max;
 }
