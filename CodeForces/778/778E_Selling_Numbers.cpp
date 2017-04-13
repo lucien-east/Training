@@ -2,7 +2,7 @@
 
 using namespace std;
 
-#define N 1010
+#define N 1001
 #define oo (1<<30)
 
 unsigned int n;
@@ -14,7 +14,7 @@ unsigned int len_A;
 unsigned int len_B[N];
 int dp[N][N];
 pair<int, int> ord[N];
-int magic = 1006;
+int magic = 1001;
 
 
 void init();
