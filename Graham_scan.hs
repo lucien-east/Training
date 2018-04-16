@@ -89,6 +89,7 @@ convex_scan (p:ps) stack
 -- Graham's scan
 graham_scan :: [Point] -> [Point]
 graham_scan [] = []
+-- reverse: make the point order be counter-clockwise
 graham_scan (a:b:points) = reverse $ convex_scan points stack
     where base = left_lower_most (a:b:points)
           sorted_points = polar_angle_sort base (a:b:points)
